@@ -29,6 +29,10 @@ public class CustomStack<T> {
         T element = (T) elements[size];
         elements[size] = null;
 
+        if (size == 0 && elements.length > DEFAULT_CAPACITY) {
+            elements = new Object[DEFAULT_CAPACITY];
+        }
+
         return element;
     }
 
@@ -61,5 +65,9 @@ public class CustomStack<T> {
         if (isEmpty()) {
             throw new IllegalStateException("Stack is empty");
         }
+    }
+
+    public int capacity() {
+        return elements.length;
     }
 }
