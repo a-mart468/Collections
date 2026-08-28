@@ -1,17 +1,17 @@
 package stack;
 
+
 public class HistogramSolver {
 
-    public int findLargestRectangleArea(int[] heights) {
-        if (heights == null || heights.length == 0) {
+    public int findLargestRectangleArea(int[] heights, Stack<Integer> stack) {
+        validateArguments(heights, stack);
+
+        if (heights.length == 0) {
             return 0;
         }
-
-        CustomStack<Integer> stack = new CustomStack<>();
         int maxArea = 0;
 
         for (int i = 0; i <= heights.length; i++) {
-
             int currentHeight;
 
             if (i == heights.length) {
@@ -20,11 +20,9 @@ public class HistogramSolver {
                 currentHeight = heights[i];
             }
 
-            while (!stack.isEmpty() && currentHeight < heights[stack.peek()]) {
-
+            while (!stack.isEmpty() && currentHeight <= heights[stack.peek()]) {
                 int removedIndex = stack.pop();
                 int rectangleHeight = heights[removedIndex];
-
                 int leftBoundary;
 
                 if (stack.isEmpty()) {
@@ -34,6 +32,7 @@ public class HistogramSolver {
                 }
 
                 int width = i - leftBoundary - 1;
+
                 int area = rectangleHeight * width;
 
                 if (area > maxArea) {
@@ -47,5 +46,33 @@ public class HistogramSolver {
         }
 
         return maxArea;
+    }
+
+    private void validateArguments(int[] heights, Stack<Integer> stack) {
+        if (heights == null) {
+            throw new IllegalArgumentException(
+                    "Heights cannot be null"
+            );
+        }
+
+        if (stack == null) {
+            throw new IllegalArgumentException(
+                    "Stack cannot be null"
+            );
+        }
+
+        if (!stack.isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Stack must be empty"
+            );
+        }
+
+        for (int height : heights) {
+            if (height < 0) {
+                throw new IllegalArgumentException(
+                        "Height cannot be negative"
+                );
+            }
+        }
     }
 }

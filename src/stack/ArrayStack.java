@@ -1,16 +1,17 @@
 package stack;
 
-public class CustomStack<T> {
+public class ArrayStack<T> implements Stack<T> {
 
     private static final int DEFAULT_CAPACITY = 10;
 
     private Object[] elements;
     private int size;
 
-    public CustomStack() {
+    public ArrayStack() {
         elements = new Object[DEFAULT_CAPACITY];
     }
 
+    @Override
     public void push(T element) {
         if (size == elements.length) {
             grow();
@@ -20,6 +21,7 @@ public class CustomStack<T> {
         size++;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public T pop() {
         checkNotEmpty();
@@ -36,6 +38,7 @@ public class CustomStack<T> {
         return element;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public T peek() {
         checkNotEmpty();
@@ -43,10 +46,12 @@ public class CustomStack<T> {
         return (T) elements[size - 1];
     }
 
+    @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
+    @Override
     public int size() {
         return size;
     }
@@ -70,4 +75,5 @@ public class CustomStack<T> {
     public int capacity() {
         return elements.length;
     }
+
 }
